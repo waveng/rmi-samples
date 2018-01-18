@@ -12,7 +12,7 @@ import java.rmi.Naming;
 import my.rmi.samples.api.Calc;
 
 /**
- * 类CalsClinet.java的实现描述：TODO 类实现描述
+ * 类CalsClinet.java的实现描述：通过 Naming.lookup 获取服务
  * @author wangbo 2018年1月2日 下午5:52:17
  * @date 2018年1月2日 下午5:52:17
  * @version V1.0

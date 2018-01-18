@@ -5,6 +5,7 @@
  */
 package my.rmi.samples.provider;
 
+import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,9 +23,10 @@ public class NamingRegistryTest {
      * TODO 描述
      *
      * @author wangbo 2018年1月2日 下午7:20:36
+     * @throws RemoteException
      */
     @Test
-    public void registry() {
+    public void registry() throws RemoteException {
         NamingRegistry registry = new NamingRegistry();
         Map<String, Class> cs = new HashMap<String, Class>();
         cs.put("calc", CalcImpl.class);

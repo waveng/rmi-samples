@@ -8,6 +8,7 @@
 package my.rmi.samples.api;
 
 import java.rmi.Remote;
+import java.rmi.RemoteException;
 
 /**
  * 类Hello.java的实现描述：TODO 类实现描述
