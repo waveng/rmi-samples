@@ -8,6 +8,7 @@
 package my.rmi.samples.api;
 
 import java.rmi.Remote;
+import java.rmi.RemoteException;
 
 /**
  * @author wangbo 2018年1月2日 下午5:27:45
@@ -15,5 +16,5 @@ import java.rmi.Remote;
  * @version V1.0
  */
 public interface Calc extends Remote {
-    int add(int a, int b) throws Exception;
+    int add(int a, int b) throws RemoteException ;
 }

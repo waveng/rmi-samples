@@ -6,8 +6,9 @@
 package my.rmi.samples.provider;
 
 import java.rmi.RemoteException;
-import java.util.HashMap;
-import java.util.Map;
+import java.rmi.registry.LocateRegistry;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Test;
 
@@ -27,10 +28,11 @@ public class NamingRegistryTest {
      */
     @Test
     public void registry() throws RemoteException {
-        NamingRegistry registry = new NamingRegistry();
-        Map<String, Class> cs = new HashMap<String, Class>();
-        cs.put("calc", CalcImpl.class);
-        cs.put("hello", HelloImpl.class);
+        LocateRegistry.createRegistry(2020);
+        NamingRegistry registry = new NamingRegistry(2020);
+        List<Class<?>> cs = new ArrayList<Class<?>>();
+        cs.add(CalcImpl.class);
+        cs.add(HelloImpl.class);
         try {
             registry.registry(cs);
             System.in.read();

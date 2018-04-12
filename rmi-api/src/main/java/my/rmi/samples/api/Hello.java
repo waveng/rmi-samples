@@ -21,5 +21,5 @@ public interface Hello extends Remote {
      * TODO 描述
      * @author wangbo 2018年1月2日 下午6:59:23
      */
-    String sayHi(String name) throws Exception;
+    String sayHi(String name) throws RemoteException ;
 }

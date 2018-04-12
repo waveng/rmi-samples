@@ -7,7 +7,9 @@
  */
 package my.rmi.samples.consumer;
 
-import java.rmi.Naming;
+import java.net.MalformedURLException;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 
 import my.rmi.samples.api.Calc;
 
@@ -22,8 +24,15 @@ public class CalsClinet implements Calc {
     /* (non-Javadoc)
      * @see my.rim.samples.api.Calc#add(int, int)
      */
-    public int add(int a, int b) throws Exception {
-        Calc calc = (Calc)Naming.lookup("rmi://192.168.108.74:2020/rmi/calc");
-        return calc.add(a, b);
+    public int add(int a, int b) throws RemoteException  {
+        Calc calc;
+        try {
+            calc = (Calc)NamingUtil.lookup(Calc.class);
+            return calc.add(a, b);
+        } catch (MalformedURLException e) {
+            throw new RemoteException(e.getMessage(), e);
+        } catch (NotBoundException e) {
+            throw new RemoteException(e.getMessage(), e);
+        }
     }
 }

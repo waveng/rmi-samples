@@ -5,6 +5,8 @@
  */
 package my.rmi.samples.consumer;
 
+import java.rmi.RemoteException;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -23,7 +25,7 @@ public class CalcImplTest {
             int s = c.add(2, 3);
             Assert.assertEquals(s, 5);
             System.out.println(s);
-        } catch (Exception e) {
+        } catch (RemoteException  e) {
             e.printStackTrace();
         }
     }

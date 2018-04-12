@@ -9,60 +9,51 @@ import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
-import java.util.Map;
-import java.util.Map.Entry;
+import java.util.List;
 
 /**
- * 类NamingRegistry.java的实现描述：发布 服务前需要启动 注册中心, 可通过LocateRegistry.createRegistry(port) 启动,
- * 通过  Naming.rebind 发布服务
+ * 类NamingRegistry.java的实现描述：发布 服务前需要启动 注册中心,
+ * 可通过LocateRegistry.createRegistry(port) 启动, 通过 Naming.rebind 发布服务
+ * 
  * @author wangbo 2018年1月2日 下午7:07:52
  * @date 2018年1月2日 下午7:07:52
  * @version V1.0
  */
 public class NamingRegistry {
-    private int port = 2020;
-
-    public NamingRegistry() throws RemoteException {
-        super();
-        init();
-    }
+    private int    port = 2020;
+    private String ip   = "127.0.0.1";
 
     public NamingRegistry(int port) throws RemoteException {
         super();
         this.port = port;
-        init();
     }
 
-    /**
-     *
-     * 启动注册中心
-     * @author wangbo 2018年1月18日 上午9:43:15
-     * @throws RemoteException
-     */
-    private void init() throws RemoteException {
-        LocateRegistry.createRegistry(port);
-
+    public NamingRegistry(String ip, int port) throws RemoteException {
+        super();
+        this.ip = ip;
+        this.port = port;
     }
 
-    public void registry(Map<String, Class> cs)
-        throws RemoteException, MalformedURLException, InstantiationException, IllegalAccessException {
-        for (Entry<String, Class> remote : cs.entrySet()) {
-            registry((Remote)remote.getValue().newInstance(), remote.getKey());
+    public void registry(List<Class<?>> cs)
+            throws RemoteException, MalformedURLException, InstantiationException, IllegalAccessException {
+        for (Class<?> remote : cs) {
+            Class<?>[] serviceName = remote.getInterfaces();
+            registry((Remote) remote.newInstance(), serviceName[0].getName());
         }
     }
 
     /**
-     *
      * 注册服务
+     * 
      * @author wangbo 2018年1月18日 上午10:28:14
-     * @param r
+     * @param remote
      * @param name
      * @throws RemoteException
      * @throws MalformedURLException
      */
-    private void registry(Remote r, String name) throws RemoteException, MalformedURLException {
-        Naming.rebind("rmi://192.168.108.74:"+port+"/rmi/" + name, r);
+    private void registry(Remote remote, String name) throws RemoteException, MalformedURLException {
+
+        Naming.rebind(String.format("rmi://%s:%d/%s", ip, port, name), remote);
     }
 
 }
